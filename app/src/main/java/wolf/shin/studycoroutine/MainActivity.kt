@@ -1,40 +1,57 @@
 package wolf.shin.studycoroutine
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import wolf.shin.studycoroutine.ui.theme.StudyCoroutineTheme
+import kotlin.random.Random
+
+val TAG = "CoroutineStudy"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             StudyCoroutineTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                runBlocking {
+                    try {
+                        doSomething()
+                    } finally {
+                        Log.d(TAG, "doSomething failed")
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+suspend fun getRandom1(): Int {
+    try {
+        delay(1000L)
+        return Random.nextInt(0, 500)
+    } finally {
+        Log.d(TAG, "getRandom1 cancel")
+    }
+
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    StudyCoroutineTheme {
-        Greeting("Android")
+suspend fun getRandom2(): Int {
+    delay(1000L)
+    throw IllegalStateException()
+}
+
+suspend fun doSomething() = coroutineScope {
+    val value1 = async { getRandom1() }
+    val value2 = async { getRandom2() }
+
+    try {
+        Log.d(TAG, "result ${value1.await()} + ${value2.await()} = ${value1.await() + value2.await()}")
+    } finally {
+        Log.d(TAG, "doSomething cancel")
     }
 }
