@@ -30,6 +30,16 @@ class MainActivity : ComponentActivity() {
                     }
                     Log.d(TAG, "$elapsedTime")
                 }
+
+                runBlocking {
+                    val elapsedTime = measureTimeMillis {
+                        val value1 = async { getRandom1() }
+                        val value2 = async { getRandom2() }
+
+                        Log.d(TAG, "async ${value1.await()} + ${value2.await()} = ${value1.await() + value2.await()}")
+                    }
+                    Log.d(TAG, "$elapsedTime")
+                }
             }
         }
     }
