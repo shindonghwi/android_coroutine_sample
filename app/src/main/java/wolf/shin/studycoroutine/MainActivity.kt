@@ -4,17 +4,14 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import kotlinx.coroutines.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import wolf.shin.studycoroutine.ui.theme.StudyCoroutineTheme
 import kotlin.random.Random
-import kotlin.system.measureTimeMillis
+
+val TAG = "CoroutineStudy"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,54 +19,39 @@ class MainActivity : ComponentActivity() {
         setContent {
             StudyCoroutineTheme {
                 runBlocking {
-                    val elapsedTime = measureTimeMillis {
-                        val value1 = getRandom1()
-                        val value2 = getRandom2()
-
-                        Log.d(TAG, "$value1 + $value2 = ${value1 + value2}")
+                    try {
+                        doSomething()
+                    } finally {
+                        Log.d(TAG, "doSomething failed")
                     }
-                    Log.d(TAG, "$elapsedTime")
-                }
-
-                runBlocking {
-                    val elapsedTime = measureTimeMillis {
-                        val value1 = async { getRandom1() }
-                        val value2 = async { getRandom2() }
-
-                        Log.d(TAG, "async ${value1.await()} + ${value2.await()} = ${value1.await() + value2.await()}")
-                    }
-                    Log.d(TAG, "$elapsedTime")
-                }
-
-                runBlocking {
-                    val elapsedTime = measureTimeMillis {
-                        val value1 = async(start = CoroutineStart.LAZY) { getRandom1() }
-                        val value2 = async(start = CoroutineStart.LAZY) { getRandom2() }
-
-                        value1.start()
-                        value2.start()
-
-                        Log.d(TAG, "async lazy ${value1.await()} + ${value2.await()} = ${value1.await() + value2.await()}")
-                    }
-                    Log.d(TAG, "$elapsedTime")
                 }
             }
         }
     }
+}
 
-    companion object{
-        val TAG = "CoroutineStudy"
+suspend fun getRandom1(): Int {
+    try {
+        delay(1000L)
+        return Random.nextInt(0, 500)
+    } finally {
+        Log.d(TAG, "getRandom1 cancel")
     }
 
 }
 
-suspend fun getRandom1(): Int{
+suspend fun getRandom2(): Int {
     delay(1000L)
-    return Random.nextInt(0, 500)
+    throw IllegalStateException()
 }
 
-suspend fun getRandom2(): Int{
-    delay(1000L)
-    return Random.nextInt(0, 500)
-}
+suspend fun doSomething() = coroutineScope {
+    val value1 = async { getRandom1() }
+    val value2 = async { getRandom2() }
 
+    try {
+        Log.d(TAG, "result ${value1.await()} + ${value2.await()} = ${value1.await() + value2.await()}")
+    } finally {
+        Log.d(TAG, "doSomething cancel")
+    }
+}
