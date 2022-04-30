@@ -40,6 +40,19 @@ class MainActivity : ComponentActivity() {
                     }
                     Log.d(TAG, "$elapsedTime")
                 }
+
+                runBlocking {
+                    val elapsedTime = measureTimeMillis {
+                        val value1 = async(start = CoroutineStart.LAZY) { getRandom1() }
+                        val value2 = async(start = CoroutineStart.LAZY) { getRandom2() }
+
+                        value1.start()
+                        value2.start()
+
+                        Log.d(TAG, "async lazy ${value1.await()} + ${value2.await()} = ${value1.await() + value2.await()}")
+                    }
+                    Log.d(TAG, "$elapsedTime")
+                }
             }
         }
     }
