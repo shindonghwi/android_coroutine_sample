@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import kotlinx.coroutines.*
 import wolf.shin.studycoroutine.ui.theme.StudyCoroutineTheme
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 
@@ -37,13 +38,12 @@ class MainActivity : ComponentActivity() {
         println("$elapsed ms동안 ${n * k}개의 액션을 수행했다.")
     }
 
-    @Volatile // 가시성 문제를 해결 할 수 있어도, 동시에 읽고 수정해서 생기는 문제는 해결 못한다.
-    var counter = 0
+    var counter = AtomicInteger() // 다른 스레드에서 값을 변경시키지 못한다.
 
     fun main() = runBlocking {
         withContext(Dispatchers.Default){
             massiveRun {
-                counter++
+                counter.incrementAndGet()
             }
         }
         println("Counter = $counter")
