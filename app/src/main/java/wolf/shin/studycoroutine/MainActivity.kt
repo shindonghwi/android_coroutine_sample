@@ -16,21 +16,35 @@ class MainActivity : ComponentActivity() {
         setContent {
             StudyCoroutineTheme {
 
-                val scope = CoroutineScope(Dispatchers.Default)
+                runBlocking {
 
-                val job = scope.launch(Dispatchers.IO) {
-                    launch { printRandom() }
+                    val scope = CoroutineScope(Dispatchers.IO)
+
+                    val job = scope.launch(ceh + CoroutineName("Wolf Coroutine")) {
+                        launch { printRandom1() }
+                        launch { printRandom2() }
+                    }
+                    with(job) {
+                        join()
+                    }
                 }
-
-                Thread.sleep(1000L)
-
 
             }
         }
     }
 
-    suspend fun printRandom() {
-        delay(500L)
+    suspend fun printRandom1() {
+        delay(100L)
         println(Random.nextInt(0, 500))
     }
+
+    suspend fun printRandom2() {
+        delay(500L)
+        throw ArithmeticException()
+    }
+
+    val ceh = CoroutineExceptionHandler { coroutineContext, throwable ->
+        println("Something happend: $throwable")
+    }
+
 }
