@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import wolf.shin.studycoroutine.ui.theme.StudyCoroutineTheme
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.random.Random
@@ -39,12 +41,12 @@ class MainActivity : ComponentActivity() {
     }
 
     var counter = 0
-    val counterContext = newSingleThreadContext("CounterContext")
+    val mutex = Mutex() // 임계 영역을 동시에 접근하는 것을 허용하지 않는다.
 
     fun main() = runBlocking {
         withContext(Dispatchers.Default){
             massiveRun {
-                withContext(counterContext){
+                mutex.withLock {
                     counter++
                 }
             }
