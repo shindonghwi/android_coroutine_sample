@@ -11,6 +11,7 @@ import kotlin.random.Random
 val TAG = "CoroutineStudy"
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalStdlibApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -20,6 +21,9 @@ class MainActivity : ComponentActivity() {
 
                     launch {
                         launch(Dispatchers.IO + CoroutineName("launch1")) {
+
+                            coroutineContext[CoroutineName]
+                            coroutineContext[CoroutineDispatcher]
 
                         }
                     }
