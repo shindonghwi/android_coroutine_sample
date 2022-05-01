@@ -38,12 +38,15 @@ class MainActivity : ComponentActivity() {
         println("$elapsed ms동안 ${n * k}개의 액션을 수행했다.")
     }
 
-    var counter = AtomicInteger() // 다른 스레드에서 값을 변경시키지 못한다.
+    var counter = 0
+    val counterContext = newSingleThreadContext("CounterContext")
 
     fun main() = runBlocking {
         withContext(Dispatchers.Default){
             massiveRun {
-                counter.incrementAndGet()
+                withContext(counterContext){
+                    counter++
+                }
             }
         }
         println("Counter = $counter")
