@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.actor
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import wolf.shin.studycoroutine.ui.theme.StudyCoroutineTheme
@@ -40,18 +41,32 @@ class MainActivity : ComponentActivity() {
         println("$elapsed ms동안 ${n * k}개의 액션을 수행했다.")
     }
 
-    var counter = 0
-    val mutex = Mutex() // 임계 영역을 동시에 접근하는 것을 허용하지 않는다.
-
-    fun main() = runBlocking {
-        withContext(Dispatchers.Default){
-            massiveRun {
-                mutex.withLock {
-                    counter++
-                }
+    fun CoroutineScope.counterActor() = actor<CounterMsg> {
+        var counter = 0
+        for (msg in channel){
+            when(msg){
+                is IncCounter -> counter++
+                is GetCounter -> msg.response.complete(counter)
             }
         }
-        println("Counter = $counter")
     }
+
+    fun main() = runBlocking {
+        val counter = counterActor()
+        withContext(Dispatchers.Default){
+            massiveRun {
+                counter.send(IncCounter)
+            }
+        }
+
+        val response = CompletableDeferred<Int>()
+        counter.send(GetCounter(response))
+        print("Counter: ${response.await()}")
+        counter.close()
+    }
+
+    sealed class CounterMsg
+    object IncCounter : CounterMsg()
+    class GetCounter(val response: CompletableDeferred<Int>): CounterMsg()
 
 }
