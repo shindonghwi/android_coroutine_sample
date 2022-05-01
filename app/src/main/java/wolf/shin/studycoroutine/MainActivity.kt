@@ -1,7 +1,6 @@
 package wolf.shin.studycoroutine
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import kotlinx.coroutines.*
@@ -17,20 +16,21 @@ class MainActivity : ComponentActivity() {
         setContent {
             StudyCoroutineTheme {
 
-                runBlocking {
+                val scope = CoroutineScope(Dispatchers.Default)
 
-                    launch {
-                        launch(Dispatchers.IO + CoroutineName("launch1")) {
-
-                            coroutineContext[CoroutineName]
-                            coroutineContext[CoroutineDispatcher]
-
-                        }
-                    }
-
+                val job = scope.launch(Dispatchers.IO) {
+                    launch { printRandom() }
                 }
+
+                Thread.sleep(1000L)
+
 
             }
         }
+    }
+
+    suspend fun printRandom() {
+        delay(500L)
+        println(Random.nextInt(0, 500))
     }
 }
