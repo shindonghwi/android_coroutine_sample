@@ -17,13 +17,13 @@ class MainActivity : ComponentActivity() {
             StudyCoroutineTheme {
 
                 runBlocking {
-                    async(Dispatchers.Unconfined){
-                        Log.d(TAG, "${Thread.currentThread().name}")
-                        delay(100L)
-                        Log.d(TAG, "${Thread.currentThread().name}")
-                        delay(100L)
-                        Log.d(TAG, "${Thread.currentThread().name}")
+
+                    launch {
+                        launch(Dispatchers.IO + CoroutineName("launch1")) {
+
+                        }
                     }
+
                 }
 
             }
