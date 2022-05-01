@@ -18,15 +18,13 @@ class MainActivity : ComponentActivity() {
 
                 runBlocking {
 
-                    val scope = CoroutineScope(Dispatchers.IO)
+                    val scope = CoroutineScope(Dispatchers.IO + SupervisorJob() + ceh)
 
-                    val job = scope.launch(ceh + CoroutineName("Wolf Coroutine")) {
-                        launch { printRandom1() }
-                        launch { printRandom2() }
-                    }
-                    with(job) {
-                        join()
-                    }
+                    val job1 = scope.launch { printRandom1() }
+                    val job2 = scope.launch { printRandom2() }
+
+                    joinAll(job1, job2)
+
                 }
 
             }
