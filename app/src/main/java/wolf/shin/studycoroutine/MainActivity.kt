@@ -1,7 +1,6 @@
 package wolf.shin.studycoroutine
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import kotlinx.coroutines.*
@@ -19,18 +18,33 @@ class MainActivity : ComponentActivity() {
 
                 runBlocking {
 
-                    launch {
-                        launch(Dispatchers.IO + CoroutineName("launch1")) {
-
-                            coroutineContext[CoroutineName]
-                            coroutineContext[CoroutineDispatcher]
-
-                        }
-                    }
+                    CoroutineScope(Dispatchers.IO).launch {
+                        supervisoredFunc()
+                    }.join()
 
                 }
 
             }
         }
     }
+
+    suspend fun printRandom1() {
+        delay(100L)
+        println(Random.nextInt(0, 500))
+    }
+
+    suspend fun printRandom2() {
+        delay(500L)
+        throw ArithmeticException()
+    }
+
+    suspend fun supervisoredFunc() = supervisorScope {
+        launch { printRandom1() }
+        launch(ceh) { printRandom2() }
+    }
+
+    val ceh = CoroutineExceptionHandler { coroutineContext, throwable ->
+        println("Something happend: $throwable")
+    }
+
 }
