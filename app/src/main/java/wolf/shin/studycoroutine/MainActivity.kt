@@ -3,19 +3,14 @@ package wolf.shin.studycoroutine
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.actor
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.runBlocking
 import wolf.shin.studycoroutine.ui.theme.StudyCoroutineTheme
-import java.util.concurrent.atomic.AtomicInteger
 import kotlin.random.Random
-import kotlin.system.measureTimeMillis
 
 val TAG = "CoroutineStudy"
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -25,48 +20,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    suspend fun massiveRun(action: suspend () -> Unit){
-        val n = 100 // 시작할 코루틴의 갯수
-        val k = 1000 // 코루틴 내에서 반복할 횟수
-
-        val elapsed = measureTimeMillis {
-            coroutineScope {
-                repeat(n){
-                    launch {
-                        repeat(k) { action() }
-                    }
-                }
-            }
-        }
-        println("$elapsed ms동안 ${n * k}개의 액션을 수행했다.")
-    }
-
-    fun CoroutineScope.counterActor() = actor<CounterMsg> {
-        var counter = 0
-        for (msg in channel){
-            when(msg){
-                is IncCounter -> counter++
-                is GetCounter -> msg.response.complete(counter)
-            }
-        }
-    }
-
     fun main() = runBlocking {
-        val counter = counterActor()
-        withContext(Dispatchers.Default){
-            massiveRun {
-                counter.send(IncCounter)
-            }
+        // asFlow는 컬렉션이나 시퀀스를 전달해서 플로우를 만들 수 있음
+        listOf(1,2,3).asFlow().collect { value -> println(value) }
+        (6..10).asFlow().collect{
+            println(it)
         }
-
-        val response = CompletableDeferred<Int>()
-        counter.send(GetCounter(response))
-        print("Counter: ${response.await()}")
-        counter.close()
     }
-
-    sealed class CounterMsg
-    object IncCounter : CounterMsg()
-    class GetCounter(val response: CompletableDeferred<Int>): CounterMsg()
-
+    // 콜드 스트림 : 요청이 있는 경우에 대해서 1:1 로 값을 전달하기 시작
+    // 핫 스트림: 0개 이상의 상대를 향해 지속적으로 값을 전달
 }
