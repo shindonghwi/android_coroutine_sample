@@ -26,11 +26,13 @@ class MainActivity : ComponentActivity() {
     fun flowSomething(): Flow<Int> = flow{
         repeat(10){
             emit(Random.nextInt(0, 500))
-            kotlinx.coroutines.delay(10L)
+            kotlinx.coroutines.delay(1000L)
         }
     }
 
     fun main() = runBlocking {
         flowSomething().collect { value -> println(value) }
     }
+    // 콜드 스트림 : 요청이 있는 경우에 대해서 1:1 로 값을 전달하기 시작
+    // 핫 스트림: 0개 이상의 상대를 향해 지속적으로 값을 전달
 }
