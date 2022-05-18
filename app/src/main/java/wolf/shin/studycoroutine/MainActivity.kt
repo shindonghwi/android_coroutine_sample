@@ -48,7 +48,12 @@ class MainActivity : ComponentActivity() {
 
                 /** Flow 결합 */
 //                flowZip()
-                flowCombine()
+//                flowCombine()
+
+                /** Flow 플래트닝 */
+                flowFlatMapConcat()
+
+
             }
         }
     }
