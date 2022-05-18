@@ -47,7 +47,8 @@ class MainActivity : ComponentActivity() {
 //                flowCollectLatest()
 
                 /** Flow 결합 */
-                flowZip()
+//                flowZip()
+                flowCombine()
             }
         }
     }
