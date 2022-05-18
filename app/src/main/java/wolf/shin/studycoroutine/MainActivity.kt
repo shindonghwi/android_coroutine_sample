@@ -52,7 +52,8 @@ class MainActivity : ComponentActivity() {
 
                 /** Flow 플래트닝 */
 //                flowFlatMapConcat()
-                flowFlatMapMerge()
+//                flowFlatMapMerge()
+                flowFlatMapLatest()
 
             }
         }
