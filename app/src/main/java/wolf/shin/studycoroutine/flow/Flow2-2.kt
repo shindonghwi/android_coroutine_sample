@@ -27,3 +27,7 @@ fun flowFilter() = runBlocking {
 fun flowFilterNot() = runBlocking {
     (1..20).asFlow().filterNot { it % 2 == 0 }.collect { Log.d(TAG, "flowFilter: $it") }
 }
+
+fun flowMapAndFilterNot() = runBlocking {
+    (1..20).asFlow().filterNot { it % 2 == 0 }.map { it * 3 }.collect { Log.d(TAG, "flowFilter: $it") }
+}
