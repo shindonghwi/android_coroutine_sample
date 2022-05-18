@@ -29,7 +29,8 @@ class MainActivity : ComponentActivity() {
 //                flowTake()
 //                flowTakeWhile()
 //                flowDrop()
-                flowDropWhile()
+//                flowDropWhile()
+                flowReduce()
             }
         }
     }

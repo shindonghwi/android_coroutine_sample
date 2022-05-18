@@ -81,8 +81,15 @@ fun flowDropWhile() = runBlocking {
     (1..20).asFlow().transform {
         emit(it) // 1 100ms 2 100ms 3
         emit(someCalc(it)) // 2 4
-    }.dropWhile { it < 10 } // 10이하 값을 버린다
+    }.dropWhile { it > 10 } // 10이하 값을 버린다
         .collect { // 1 2 2 4 3 ...
-            Log.d(TAG, "flowTransform: $it")
+            Log.d(TAG, "flowDropWhile: $it")
         }
+}
+
+fun flowReduce() = runBlocking { // 누적계산 reduce
+    val value = (1..10).asFlow().reduce { a, b -> // a => 1, b => 2 . a => 3, b= 3
+        a + b
+    }
+    Log.d(TAG, "flowReduce: $value")
 }
