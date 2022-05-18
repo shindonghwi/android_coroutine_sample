@@ -107,3 +107,6 @@ fun flowCount() = runBlocking {
     }
     Log.d(TAG, "flowCount: $value")
 }
+
+// 중단연산자 => 결과 X
+// 종단 연산자 => 결과를 리턴한다.
