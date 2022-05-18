@@ -42,7 +42,9 @@ class MainActivity : ComponentActivity() {
 //                flowSimpleFlowOn()
 
                 /** Flow buffer */
-                flowConflate()
+//                flowBuffer()
+//                flowConflate()
+                flowCollectLatest()
 
             }
         }
