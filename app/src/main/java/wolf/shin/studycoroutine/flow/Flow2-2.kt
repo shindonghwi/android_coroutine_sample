@@ -23,3 +23,7 @@ fun main_flow_2_2() = runBlocking {
 fun flowFilter() = runBlocking {
     (1..20).asFlow().filter { it % 2 == 0 }.collect { Log.d(TAG, "flowFilter: $it") }
 }
+
+fun flowFilterNot() = runBlocking {
+    (1..20).asFlow().filterNot { it % 2 == 0 }.collect { Log.d(TAG, "flowFilter: $it") }
+}

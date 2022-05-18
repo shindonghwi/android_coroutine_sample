@@ -8,6 +8,7 @@ import kotlinx.coroutines.channels.actor
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import wolf.shin.studycoroutine.flow.flowFilter
+import wolf.shin.studycoroutine.flow.flowFilterNot
 import wolf.shin.studycoroutine.flow.main_flow_2_2
 import wolf.shin.studycoroutine.ui.theme.StudyCoroutineTheme
 import java.util.concurrent.atomic.AtomicInteger
@@ -23,7 +24,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             StudyCoroutineTheme {
 //                main_flow_2_2()
-                flowFilter()
+//                flowFilter()
+                flowFilterNot()
             }
         }
     }
