@@ -37,7 +37,8 @@ class MainActivity : ComponentActivity() {
 //                flowCount()
 
                 /** Flow 2-3 플로우 컨텍스트 */
-                main_flow_2_3()
+//                main_flow_2_3()
+                flowSimpleWithContext()
             }
         }
     }
