@@ -27,3 +27,11 @@ fun flowFlatMapConcat() = runBlocking {
         }
         .collect { value -> println("$value at ${System.currentTimeMillis() - startTime} ms from Start")}
 }
+fun flowFlatMapMerge() = runBlocking {
+    val startTime = System.currentTimeMillis()
+    (1..3).asFlow().onEach { delay(100L) }
+        .flatMapMerge { /** 첫번째 요소를 플레트닝 하고 다음 요소가 바로 이어나온다. 기다리지 않음. */
+            requestFlow(it)
+        }
+        .collect { value -> println("$value at ${System.currentTimeMillis() - startTime} ms from Start")}
+}
