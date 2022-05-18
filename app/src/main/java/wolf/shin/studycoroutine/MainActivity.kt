@@ -62,7 +62,8 @@ class MainActivity : ComponentActivity() {
 //                flowTryCatch3()
 
                 /** Flow 완료처리 */
-                flowFinally1()
+//                flowFinally1()
+                flowFinally2()
             }
         }
     }

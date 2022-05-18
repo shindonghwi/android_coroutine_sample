@@ -17,3 +17,15 @@ fun flowFinally1() = runBlocking {
         .onCompletion { println("Done") }
         .collect { value -> println(value) }
 }
+
+fun flowFinallySimple2() = flow{
+    emit(1)
+//    throw IllegalStateException()
+}
+
+fun flowFinally2() = runBlocking {
+    flowFinallySimple2()
+        .onCompletion { cause -> if (cause != null) println("Flow Error") else println("Flow Completed") }
+        .catch { e -> println("Caught exception: $e") }
+        .collect { value -> println(value) }
+}
