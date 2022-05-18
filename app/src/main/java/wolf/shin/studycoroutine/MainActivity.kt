@@ -16,11 +16,13 @@ import kotlin.system.measureTimeMillis
 val TAG = "CoroutineStudy"
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             StudyCoroutineTheme {
+
+
+                /** Flow 2-2 연산자 */
 //                main_flow_2_2()
 //                flowFilter()
 //                flowFilterNot()
@@ -32,7 +34,10 @@ class MainActivity : ComponentActivity() {
 //                flowDropWhile()
 //                flowReduce()
 //                flowFold()
-                flowCount()
+//                flowCount()
+
+                /** Flow 2-3 플로우 컨텍스트 */
+                main_flow_2_3()
             }
         }
     }
