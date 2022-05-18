@@ -76,3 +76,13 @@ fun flowDrop() = runBlocking {
             Log.d(TAG, "flowTransform: $it")
         }
 }
+
+fun flowDropWhile() = runBlocking {
+    (1..20).asFlow().transform {
+        emit(it) // 1 100ms 2 100ms 3
+        emit(someCalc(it)) // 2 4
+    }.dropWhile { it < 10 } // 10이하 값을 버린다
+        .collect { // 1 2 2 4 3 ...
+            Log.d(TAG, "flowTransform: $it")
+        }
+}
