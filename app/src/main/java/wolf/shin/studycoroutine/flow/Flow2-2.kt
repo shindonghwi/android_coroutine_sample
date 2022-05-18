@@ -1,10 +1,7 @@
 package wolf.shin.studycoroutine.flow
 
 import android.util.Log
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import wolf.shin.studycoroutine.TAG
 import kotlin.random.Random
@@ -21,4 +18,8 @@ fun main_flow_2_2() = runBlocking {
     flowSomething().map {
         "$it $it"
     }.collect { value -> Log.d(TAG, "main_flow_2_2: $value") }
+}
+
+fun flowFilter() = runBlocking {
+    (1..20).asFlow().filter { it % 2 == 0 }.collect { Log.d(TAG, "flowFilter: $it") }
 }
