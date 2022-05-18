@@ -44,8 +44,10 @@ class MainActivity : ComponentActivity() {
                 /** Flow buffer */
 //                flowBuffer()
 //                flowConflate()
-                flowCollectLatest()
+//                flowCollectLatest()
 
+                /** Flow 결합 */
+                flowZip()
             }
         }
     }
