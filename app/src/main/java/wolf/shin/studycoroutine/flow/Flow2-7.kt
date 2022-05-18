@@ -70,8 +70,12 @@ fun flowTryCatchSimple3() = flow{
 }
 
 fun flowTryCatch3() = runBlocking {
-    /** catch 의 투명성 - catch 연산자는 upstream에만 영향을 미치고, downstream에는 영향을 미치지 않는다. */
+    /** catch 의 투명성 - catch 연산자는 upstream에만 영향을 미치고, downstream에는 영향을 미치지 않는다.
+     * 그래서 아래 코드는 "펑!" */
     flowTryCatchSimple3()
         .catch { e -> println("Caught $e") }
-        .collect { value -> println(value) }
+        .collect { value ->
+            check(value <= 1)
+            println(value)
+        }
 }
