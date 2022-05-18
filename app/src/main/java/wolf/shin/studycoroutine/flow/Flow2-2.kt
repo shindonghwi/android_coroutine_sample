@@ -93,3 +93,10 @@ fun flowReduce() = runBlocking { // 누적계산 reduce
     }
     Log.d(TAG, "flowReduce: $value")
 }
+
+fun flowFold() = runBlocking { // 누적계산 reduce, 다만 초기값이 존재한다, 초기값이 a에 할당
+    val value = (1..10).asFlow().fold(10){ a, b ->
+        a + b
+    }
+    Log.d(TAG, "flowReduce: $value")
+}
