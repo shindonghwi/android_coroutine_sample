@@ -100,3 +100,10 @@ fun flowFold() = runBlocking { // 누적계산 reduce, 다만 초기값이 존�
     }
     Log.d(TAG, "flowReduce: $value")
 }
+
+fun flowCount() = runBlocking {
+    val value = (1..10).asFlow().count{
+        (it % 2 == 0)
+    }
+    Log.d(TAG, "flowCount: $value")
+}

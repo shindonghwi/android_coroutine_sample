@@ -31,7 +31,8 @@ class MainActivity : ComponentActivity() {
 //                flowDrop()
 //                flowDropWhile()
 //                flowReduce()
-                flowFold()
+//                flowFold()
+                flowCount()
             }
         }
     }
