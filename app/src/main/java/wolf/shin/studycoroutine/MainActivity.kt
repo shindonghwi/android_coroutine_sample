@@ -53,8 +53,10 @@ class MainActivity : ComponentActivity() {
                 /** Flow 플래트닝 */
 //                flowFlatMapConcat()
 //                flowFlatMapMerge()
-                flowFlatMapLatest()
+//                flowFlatMapLatest()
 
+                /** Flow 예외처리 */
+                flowTryCatch()
             }
         }
     }
