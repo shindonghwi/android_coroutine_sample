@@ -56,7 +56,8 @@ class MainActivity : ComponentActivity() {
 //                flowFlatMapLatest()
 
                 /** Flow 예외처리 */
-                flowTryCatch()
+//                flowTryCatch()
+                flowTryCatch1()
             }
         }
     }
