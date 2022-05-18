@@ -1,6 +1,7 @@
 package wolf.shin.studycoroutine.flow
 
 import android.util.Log
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import wolf.shin.studycoroutine.TAG
@@ -30,4 +31,18 @@ fun flowFilterNot() = runBlocking {
 
 fun flowMapAndFilterNot() = runBlocking {
     (1..20).asFlow().filterNot { it % 2 == 0 }.map { it * 3 }.collect { Log.d(TAG, "flowFilter: $it") }
+}
+
+suspend fun someCalc(i: Int):Int {
+    delay(1000L)
+    return i * 2
+}
+
+fun flowTransform() = runBlocking{
+    (1..20).asFlow().transform { 
+        emit(it) // 1 100ms 2 100ms 3
+        emit(someCalc(it)) // 2 4
+    }.collect { // 1 2 2 4 3 ...
+        Log.d(TAG, "flowTransform: $it")
+    }
 }
