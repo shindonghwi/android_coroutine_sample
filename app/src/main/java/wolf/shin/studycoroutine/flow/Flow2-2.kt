@@ -56,11 +56,22 @@ fun flowTake() = runBlocking {
             Log.d(TAG, "flowTransform: $it")
         }
 }
+
 fun flowTakeWhile() = runBlocking {
     (1..20).asFlow().transform {
         emit(it) // 1 100ms 2 100ms 3
         emit(someCalc(it)) // 2 4
-    }.takeWhile { it < 10 }
+    }.takeWhile { it > 10 }
+        .collect { // 1 2 2 4 3 ...
+            Log.d(TAG, "flowTransform: $it")
+        }
+}
+
+fun flowDrop() = runBlocking {
+    (1..20).asFlow().transform {
+        emit(it) // 1 100ms 2 100ms 3
+        emit(someCalc(it)) // 2 4
+    }.drop(5) // 처음 5개를 버린다
         .collect { // 1 2 2 4 3 ...
             Log.d(TAG, "flowTransform: $it")
         }

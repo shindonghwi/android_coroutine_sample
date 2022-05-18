@@ -27,7 +27,8 @@ class MainActivity : ComponentActivity() {
 //                flowMapAndFilterNot()
 //                flowTransform()
 //                flowTake()
-                flowTakeWhile()
+//                flowTakeWhile()
+                flowDrop()
             }
         }
     }
