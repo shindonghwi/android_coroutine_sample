@@ -58,7 +58,8 @@ class MainActivity : ComponentActivity() {
                 /** Flow 예외처리 */
 //                flowTryCatch()
 //                flowTryCatch1()
-                flowTryCatch2()
+//                flowTryCatch2()
+                flowTryCatch3()
             }
         }
     }

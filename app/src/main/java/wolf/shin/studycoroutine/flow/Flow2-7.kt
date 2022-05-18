@@ -61,3 +61,17 @@ fun flowTryCatch2() = runBlocking {
         .catch { e -> emit("Caught $e") }
         .collect { value -> println(value) }
 }
+
+fun flowTryCatchSimple3() = flow{
+    for (i in 1..3){
+        println("Emitting $i")
+        emit(i)
+    }
+}
+
+fun flowTryCatch3() = runBlocking {
+    /** catch 의 투명성 - catch 연산자는 upstream에만 영향을 미치고, downstream에는 영향을 미치지 않는다. */
+    flowTryCatchSimple3()
+        .catch { e -> println("Caught $e") }
+        .collect { value -> println(value) }
+}
