@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import wolf.shin.studycoroutine.channel.FanInOut2
+import wolf.shin.studycoroutine.channel.FanInOut3
 import wolf.shin.studycoroutine.ui.theme.StudyCoroutineTheme
 
 val TAG = "CoroutineStudy"
@@ -76,7 +77,8 @@ class MainActivity : ComponentActivity() {
 
                 /** Channel 채널 팬아웃, 팬인 */
 //                FanInOut1()
-                FanInOut2()
+//                FanInOut2()
+                FanInOut3()
             }
         }
     }

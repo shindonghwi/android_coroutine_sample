@@ -56,3 +56,25 @@ fun FanInOut2() = runBlocking {
     delay(1000L)
     coroutineContext.cancelChildren()
 }
+
+suspend fun someone(channel: Channel<String>, name: String){
+    for (comment in channel){
+        println("${name}: ${comment}")
+        channel.send(comment.drop(1) + comment.first()) // 자동집 + 군
+        delay(100L)
+    }
+}
+
+fun FanInOut3() = runBlocking {
+    val channel = Channel<String>() // 채널
+    launch {
+        someone(channel, "동휘") // 생산자
+    }
+
+    launch {
+        someone(channel, "정화") // 생산자
+    }
+    channel.send("군자동집")
+    delay(1000L)
+    coroutineContext.cancelChildren()
+}
