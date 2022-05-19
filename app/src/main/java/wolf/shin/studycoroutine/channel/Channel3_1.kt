@@ -1,6 +1,8 @@
 package wolf.shin.studycoroutine.channel
 
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.channels.produce
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -67,6 +69,26 @@ fun channelClose1() = runBlocking {
     for(x in channel){ // for in 을 통해 채널 데이터를 반복적으로 receive 할 수 있다.
         println(x)
     }
+
+    println("완료")
+}
+
+fun channelProducer1() = runBlocking {
+
+    // producer : 생산자 - 데이터를 만듦
+    // consumer : 소비자 - 데이터를 받는것을 도와줌
+
+    val oneToTen = produce<Int> { // ProducerScope = CoroutineScope + SendChannel
+        // this.send // this.coroutineContext
+        for (x in 1..10){
+            channel.send(x)
+        }
+    }
+
+    oneToTen.consumeEach {
+        println(it)
+    }
+
     println("완료")
 
 }
