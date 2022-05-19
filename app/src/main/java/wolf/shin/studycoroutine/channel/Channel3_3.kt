@@ -1,12 +1,7 @@
 package wolf.shin.studycoroutine.channel
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.channels.produce
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.*
 
 fun CoroutineScope.produceNumbers1() = produce<Int> {
     var x = 1
@@ -29,4 +24,35 @@ fun FanInOut1() = runBlocking {
 
     delay(1000L)
     producer.cancel()
+}
+
+suspend fun produceNumbers2(channel: SendChannel<Int>, from: Int, interval: Long){
+    var x = from
+    while(true){
+        channel.send(x)
+        x+=2
+        delay(interval)
+    }
+}
+
+fun CoroutineScope.processNumber(channel: ReceiveChannel<Int>) = launch {
+    channel.consumeEach {
+        println("${it}를 받았습니다")
+    }
+}
+
+fun FanInOut2() = runBlocking {
+    val channel = Channel<Int>() // 채널
+
+    launch {
+        produceNumbers2(channel, 1, 100L) // 생산자
+    }
+
+    launch {
+        produceNumbers2(channel, 2, 150L) // 생산자
+    }
+
+    processNumber(channel) // 소비자
+    delay(1000L)
+    coroutineContext.cancelChildren()
 }
