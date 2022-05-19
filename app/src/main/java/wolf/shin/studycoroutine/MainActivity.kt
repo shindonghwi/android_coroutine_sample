@@ -3,15 +3,11 @@ package wolf.shin.studycoroutine
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.actor
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
-import wolf.shin.studycoroutine.flow.*
+import wolf.shin.studycoroutine.channel.FanInOut4
+import wolf.shin.studycoroutine.channel.channelBuffer1
+import wolf.shin.studycoroutine.channel.channelBuffer2
+import wolf.shin.studycoroutine.channel.channelBuffer3
 import wolf.shin.studycoroutine.ui.theme.StudyCoroutineTheme
-import java.util.concurrent.atomic.AtomicInteger
-import kotlin.random.Random
-import kotlin.system.measureTimeMillis
 
 val TAG = "CoroutineStudy"
 
@@ -67,7 +63,30 @@ class MainActivity : ComponentActivity() {
 
                 /** Flow 런칭 */
 //                flowEvent1()
-                flowEvent2()
+//                flowEvent2()
+
+                /** Channel 기초 */
+//                channel1()
+//                channel2()
+//                channel3()
+//                channelClose1()
+//                channelProducer1()
+
+                /** Channel 파이프 라인 */
+//                channelPipeLine1()
+//                channelPipeLine2()
+//                channelPipeLine3()
+
+                /** Channel 채널 팬아웃, 팬인 */
+//                FanInOut1()
+//                FanInOut2()
+//                FanInOut3()
+//                FanInOut4()
+
+                /** Channel 버퍼링 */
+//                channelBuffer1()
+//                channelBuffer2()
+                channelBuffer3()
 
             }
         }
