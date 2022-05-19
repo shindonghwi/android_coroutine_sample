@@ -63,7 +63,11 @@ class MainActivity : ComponentActivity() {
 
                 /** Flow 완료처리 */
 //                flowFinally1()
-                flowFinally2()
+//                flowFinally2()
+
+                /** Flow 런칭 */
+                flowEvent1()
+
             }
         }
     }
