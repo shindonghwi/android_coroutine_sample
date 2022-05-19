@@ -3,6 +3,7 @@ package wolf.shin.studycoroutine.flow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.runBlocking
 
@@ -16,5 +17,11 @@ fun flowEvent1() = runBlocking {
     events()
         .onEach { event -> println("Event: $event") }
         .collect()
+    println("Done")
+}
+fun flowEvent2() = runBlocking { // this, 코루틴 스코프, 코루틴
+    events()
+        .onEach { event -> println("Event: $event : $this") }
+        .launchIn(this) // 코루틴 스코프 // 새로운 코루틴을 만들어낸다.
     println("Done")
 }

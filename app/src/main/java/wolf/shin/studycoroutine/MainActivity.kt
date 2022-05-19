@@ -66,7 +66,8 @@ class MainActivity : ComponentActivity() {
 //                flowFinally2()
 
                 /** Flow 런칭 */
-                flowEvent1()
+//                flowEvent1()
+                flowEvent2()
 
             }
         }
