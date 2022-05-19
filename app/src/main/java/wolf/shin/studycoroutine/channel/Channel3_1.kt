@@ -35,3 +35,20 @@ fun channel2() = runBlocking {
 
     println("완료")
 }
+
+fun channel3() = runBlocking {
+    val channel = Channel<Int>()
+
+    // 아래와 같이 send, receive가 중단점인데 같은 스코프 내에 있으면 무한대기 상태에 빠지게된다.
+    launch {
+        for (x in 1..10){
+            channel.send(x) // suspension point
+        }
+
+        repeat(10){
+            println(channel.receive()) // suspension point
+        }
+
+        println("완료")
+    }
+}
