@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import wolf.shin.studycoroutine.channel.channel3
 import wolf.shin.studycoroutine.channel.channelClose1
+import wolf.shin.studycoroutine.channel.channelPipeLine1
 import wolf.shin.studycoroutine.channel.channelProducer1
 import wolf.shin.studycoroutine.ui.theme.StudyCoroutineTheme
 
@@ -69,7 +70,13 @@ class MainActivity : ComponentActivity() {
 //                channel2()
 //                channel3()
 //                channelClose1()
-                channelProducer1()
+//                channelProducer1()
+
+                /** Channel 파이프 라인 */
+                channelPipeLine1()
+
+
+
 
             }
         }
