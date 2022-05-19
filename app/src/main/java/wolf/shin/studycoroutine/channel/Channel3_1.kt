@@ -52,3 +52,21 @@ fun channel3() = runBlocking {
         println("완료")
     }
 }
+
+fun channelClose1() = runBlocking {
+    val channel = Channel<Int>()
+
+    // 아래와 같이 send, receive가 중단점인데 같은 스코프 내에 있으면 무한대기 상태에 빠지게된다.
+    launch {
+        for (x in 1..10){
+            channel.send(x) // suspension point
+        }
+        channel.close() // 채널이 더이상 보낼 자료가 없다면 close를 이용해서 닫는다.
+    }
+
+    for(x in channel){ // for in 을 통해 채널 데이터를 반복적으로 receive 할 수 있다.
+        println(x)
+    }
+    println("완료")
+
+}

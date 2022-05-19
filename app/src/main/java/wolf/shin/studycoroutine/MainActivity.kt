@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import wolf.shin.studycoroutine.channel.channel3
+import wolf.shin.studycoroutine.channel.channelClose1
 import wolf.shin.studycoroutine.ui.theme.StudyCoroutineTheme
 
 val TAG = "CoroutineStudy"
@@ -65,7 +66,10 @@ class MainActivity : ComponentActivity() {
                 /** Channel 기초 */
 //                channel1()
 //                channel2()
-                channel3()
+//                channel3()
+                channelClose1()
+
+
             }
         }
     }
