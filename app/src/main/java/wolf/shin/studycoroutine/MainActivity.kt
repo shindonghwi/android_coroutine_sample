@@ -72,9 +72,10 @@ class MainActivity : ComponentActivity() {
                 /** Channel 파이프 라인 */
 //                channelPipeLine1()
 //                channelPipeLine2()
-                channelPipeLine3()
+//                channelPipeLine3()
 
-
+                /** Channel 채널 팬아웃, 팬인 */
+                FanInOut1()
             }
         }
     }
