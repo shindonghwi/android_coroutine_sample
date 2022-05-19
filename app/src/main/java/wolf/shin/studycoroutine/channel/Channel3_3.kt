@@ -2,6 +2,7 @@ package wolf.shin.studycoroutine.channel
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
+import kotlinx.coroutines.selects.select
 
 fun CoroutineScope.produceNumbers1() = produce<Int> {
     var x = 1
@@ -77,4 +78,34 @@ fun FanInOut3() = runBlocking {
     channel.send("군자동집")
     delay(1000L)
     coroutineContext.cancelChildren()
+}
+
+fun CoroutineScope.sayFast() = produce<String> {
+    while (true){
+        delay(50L)
+        send("군자동")
+    }
+}
+
+fun CoroutineScope.sayHouse() = produce<String> { // return 리시브 채널
+    while (true){
+        delay(150L)
+        send("집")
+    }
+}
+
+fun FanInOut4() = runBlocking {
+    val fast = sayFast()
+    val house = sayHouse()
+
+    repeat(5){
+        select { // 5번동안 먼저 도착하는 소비자만 처리한다.
+            fast.onReceive{
+                println("fast: $it")
+            }
+            house.onReceive{
+                println("house: $it")
+            }
+        }
+    }
 }
