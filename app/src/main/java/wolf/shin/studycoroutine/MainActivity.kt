@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import wolf.shin.studycoroutine.channel.FanInOut4
 import wolf.shin.studycoroutine.channel.channelBuffer1
+import wolf.shin.studycoroutine.channel.channelBuffer2
 import wolf.shin.studycoroutine.ui.theme.StudyCoroutineTheme
 
 val TAG = "CoroutineStudy"
@@ -82,7 +83,8 @@ class MainActivity : ComponentActivity() {
 //                FanInOut4()
 
                 /** Channel 버퍼링 */
-                channelBuffer1()
+//                channelBuffer1()
+                channelBuffer2()
 
             }
         }
