@@ -20,11 +20,31 @@ fun CoroutineScope.produceStringNumbers(numbers: ReceiveChannel<Int>): ReceiveCh
     }
 }
 
+fun CoroutineScope.filterOdd(numbers: ReceiveChannel<Int>): ReceiveChannel<String> = produce {
+    numbers.consumeEach {
+        if (it % 2 == 1){
+            send("$it !")
+        }
+    }
+}
+
 fun channelPipeLine1() = runBlocking {
     val numbers = produceNumbers()
     var stringNumbers = produceStringNumbers(numbers) // 채널을 사용하여 다른 채널을 만들어내는 것이 파이프라인
 
     repeat(5){
+        println(stringNumbers.receive())
+    }
+
+    println("완료")
+    coroutineContext.cancelChildren()
+}
+
+fun channelPipeLine2() = runBlocking {
+    val numbers = produceNumbers()
+    var stringNumbers = filterOdd(numbers) // 홀수 필터 파이프라인
+
+    repeat(10){
         println(stringNumbers.receive())
     }
 

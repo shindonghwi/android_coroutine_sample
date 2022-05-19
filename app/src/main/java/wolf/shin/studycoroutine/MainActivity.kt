@@ -3,10 +3,7 @@ package wolf.shin.studycoroutine
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import wolf.shin.studycoroutine.channel.channel3
-import wolf.shin.studycoroutine.channel.channelClose1
-import wolf.shin.studycoroutine.channel.channelPipeLine1
-import wolf.shin.studycoroutine.channel.channelProducer1
+import wolf.shin.studycoroutine.channel.*
 import wolf.shin.studycoroutine.ui.theme.StudyCoroutineTheme
 
 val TAG = "CoroutineStudy"
@@ -73,8 +70,8 @@ class MainActivity : ComponentActivity() {
 //                channelProducer1()
 
                 /** Channel 파이프 라인 */
-                channelPipeLine1()
-
+//                channelPipeLine1()
+                channelPipeLine2()
 
 
 
