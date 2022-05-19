@@ -1,5 +1,6 @@
 package wolf.shin.studycoroutine.channel
 
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.delay
@@ -42,4 +43,24 @@ fun channelBuffer2() = runBlocking {
         println("$it 수신")
         delay(100L)
     }
+}
+fun channelBuffer3() = runBlocking {
+    val channel = Channel<Int>(2, BufferOverflow.DROP_OLDEST) // 예전 데이터를 지운다.
+//    val channel = Channel<Int>(2, BufferOverflow.DROP_LATEST) // 새 데이터를 지운다.
+//    val channel = Channel<Int>(2, BufferOverflow.SUSPEND) // 잠이 들었다가 꺠어난다.
+
+    launch {
+        for (x in 1..50){
+            channel.send(x)
+        }
+        channel.close()
+    }
+
+    delay(500L)
+
+    channel.consumeEach {
+        println("$it 수신")
+        delay(100L)
+    }
+    println("완료")
 }
