@@ -3,10 +3,15 @@ package wolf.shin.studycoroutine
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.actor
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import wolf.shin.studycoroutine.flow.*
 import wolf.shin.studycoroutine.ui.theme.StudyCoroutineTheme
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.random.Random
+import kotlin.system.measureTimeMillis
 
 val TAG = "CoroutineStudy"
 
@@ -15,18 +20,56 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             StudyCoroutineTheme {
-                main()
+
+
+                /** Flow 2-2 연산자 */
+//                main_flow_2_2()
+//                flowFilter()
+//                flowFilterNot()
+//                flowMapAndFilterNot()
+//                flowTransform()
+//                flowTake()
+//                flowTakeWhile()
+//                flowDrop()
+//                flowDropWhile()
+//                flowReduce()
+//                flowFold()
+//                flowCount()
+
+                /** Flow 2-3 플로우 컨텍스트 */
+//                main_flow_2_3()
+//                flowSimpleWithContext()
+//                flowSimpleFlowOn()
+
+                /** Flow buffer */
+//                flowBuffer()
+//                flowConflate()
+//                flowCollectLatest()
+
+                /** Flow 결합 */
+//                flowZip()
+//                flowCombine()
+
+                /** Flow 플래트닝 */
+//                flowFlatMapConcat()
+//                flowFlatMapMerge()
+//                flowFlatMapLatest()
+
+                /** Flow 예외처리 */
+//                flowTryCatch()
+//                flowTryCatch1()
+//                flowTryCatch2()
+//                flowTryCatch3()
+
+                /** Flow 완료처리 */
+//                flowFinally1()
+//                flowFinally2()
+
+                /** Flow 런칭 */
+//                flowEvent1()
+                flowEvent2()
+
             }
         }
     }
-
-    fun main() = runBlocking {
-        // asFlow는 컬렉션이나 시퀀스를 전달해서 플로우를 만들 수 있음
-        listOf(1,2,3).asFlow().collect { value -> println(value) }
-        (6..10).asFlow().collect{
-            println(it)
-        }
-    }
-    // 콜드 스트림 : 요청이 있는 경우에 대해서 1:1 로 값을 전달하기 시작
-    // 핫 스트림: 0개 이상의 상대를 향해 지속적으로 값을 전달
 }
