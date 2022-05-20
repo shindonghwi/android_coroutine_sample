@@ -18,6 +18,8 @@ class ImageSearchViewModel : ViewModel() {
     private val favorites = mutableSetOf<Item>()
     private val _favoritesFlow = MutableSharedFlow<List<Item>>()
 
+    // SharedFlow, -> Flow는 콜드, SharedFlow는 핫 플로우
+
     val pagingDataFlow = queryFlow
         .flatMapLatest {
             searchImages(it)
@@ -30,6 +32,7 @@ class ImageSearchViewModel : ViewModel() {
         repository.getImageSearch(query)
 
     fun handleQuery(query: String) {
+        // 코루틴을 만들때, 뷰모델 내부라면 viewModelScope를 사용한다.
         viewModelScope.launch {
             queryFlow.emit(query)
         }
