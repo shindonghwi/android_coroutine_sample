@@ -26,7 +26,7 @@ class ImageSearchViewModel : ViewModel() {
         }
         .cachedIn(viewModelScope)
 
-    val favoritesFlow = _favoritesFlow.asSharedFlow()
+    val favoritesFlow = _favoritesFlow.asSharedFlow() // 값을 바꿀수 없는 ShareFlow로 변경됨
 
     private fun searchImages(query: String): Flow<PagingData<Item>> =
         repository.getImageSearch(query)
