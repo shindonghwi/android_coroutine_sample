@@ -21,7 +21,7 @@ class ImageSearchFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        imageSearchViewModel = ViewModelProvider(this)[ImageSearchViewModel::class.java]
+        imageSearchViewModel = ViewModelProvider(requireActivity())[ImageSearchViewModel::class.java]
     }
 
     override fun onCreateView(
